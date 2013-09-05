@@ -9,11 +9,19 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;  
 
 //some predefined String that we have to convert to 1. key 2. 明文
-//
+//1. Class name: carannotationinfolongenough
+//2. ApplicationKey:GQvxCLxantyoyl2Zo30XIpWyAtbVKa2uCbCSHNry
+//3. ClientKey: g2PktGEOsVOUxp6PS5McI9FLNQrbAspF1xsX2MEz
+//4. UserName:  AndroidUser
+//5. Password:  notdefinedmaybenotexist
 
 
 public class Mainclass {
-	
+	public static final String CLASSNAME="carannotationinfolongenough";
+	public static final String APPLICATIONID="GQvxCLxantyoyl2Zo30XIpWyAtbVKa2uCbCSHNry";
+	public static final String CLIENTKEY="g2PktGEOsVOUxp6PS5McI9FLNQrbAspF1xsX2MEz";
+	public static final String USERNAME="AndroidUserForEncryptionUse";
+	public static final String USERPASSWORD="notdefinedmaybenotexist";
 	      
 	    /** 
 	     * 密钥算法 
@@ -195,10 +203,16 @@ public class Mainclass {
 	    	return sb.toString();
 	    }
 	    
-	    public static void GenerateShowing (String show_msg,String data,FileOutputStream output) throws Exception{
+	    public static void GenerateShowing (String show_msg,String data,FileOutputStream output_k,FileOutputStream output_s) throws Exception{
+	    	System.out.println();
+	    	System.out.println();
+	    	
+	    	System.out.println("Content of: "+show_msg);
 	    	
             byte[] key = initSecretKey();  
 	        System.out.println("key："+showByteArray(key));   
+	        System.out.println("key String:"+byte2String(key));
+	        System.out.println("key 长度: length:"+key.length);
 	        Key k = toKey(key);  
 	    	
 	        System.out.println(show_msg);
@@ -208,36 +222,32 @@ public class Mainclass {
 	        byte[] encryptData = encrypt(data.getBytes(), k);  
 	        System.out.println("加密后数据: byte[]:"+showByteArray(encryptData));  
 	        System.out.println("加密后数据: hexStr:"+byte2String(encryptData));  
+	        System.out.println("明文长度  : length"+encryptData.length);
 	        System.out.println();  
 	        byte[] decryptData = decrypt(encryptData, k);  
 	        System.out.println("解密后数据: byte[]:"+showByteArray(decryptData));  
 	        System.out.println("解密后数据: string:"+new String(decryptData));  
-	        output.write(key);
+	        output_k.write(key);
+	        output_s.write(encryptData);
 	      //  FileOutputStream output=new FileOutputStream(new File("key"));
 	    }
 	    
 	    public static void main(String[] args) throws Exception {  
-	        byte[] key = initSecretKey();  
-	        
-	        System.out.println("key："+showByteArray(key));  
-	          
-	        Key k = toKey(key);  
-	          
-	        String data ="jAj3JiDwBuIvLzRejnBNBnF0nAY0pgNkbf01j6Ov";  
-	        System.out.println("加密前数据: string:"+data);  
-	        System.out.println("加密前数据: byte[]:"+showByteArray(data.getBytes()));  
-	        System.out.println();  
-	        byte[] encryptData = encrypt(data.getBytes(), k);  
-	        System.out.println("加密后数据: byte[]:"+showByteArray(encryptData));  
-	        System.out.println("加密后数据: hexStr:"+byte2String(encryptData));  
-	        System.out.println();  
-	        byte[] decryptData = decrypt(encryptData, k);  
-	        System.out.println("解密后数据: byte[]:"+showByteArray(decryptData));  
-	        System.out.println("解密后数据: string:"+new String(decryptData));  
-	          
-	        FileOutputStream output=new FileOutputStream(new File("key"));
-	        output.write(encryptData);
-	        output.close();
+	    	// Write a new File
+	    	File keyFile=new File("key.dat");
+	    	File showstringFile=new File("showString.dat");
+	    	FileOutputStream output_key=new FileOutputStream(keyFile, true);
+	    	FileOutputStream output_showString=new FileOutputStream(showstringFile,true);
+	    	GenerateShowing("classname", CLASSNAME, output_key, output_showString);
+	    	GenerateShowing("applicaitonID", APPLICATIONID, output_key, output_showString);
+	    	GenerateShowing("clientkey", CLIENTKEY, output_key, output_showString);
+	    	GenerateShowing("username", USERNAME, output_key, output_showString);
+	    	GenerateShowing("userpassword", USERPASSWORD, output_key, output_showString);
+	    	
+	    	
+	    	
+	        output_key.close();
+	        output_showString.close();
 	    }  
 	    
 	    
