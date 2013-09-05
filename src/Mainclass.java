@@ -7,6 +7,11 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;  
 import javax.crypto.SecretKey;  
 import javax.crypto.spec.SecretKeySpec;  
+
+//some predefined String that we have to convert to 1. key 2. 明文
+//
+
+
 public class Mainclass {
 	
 	      
