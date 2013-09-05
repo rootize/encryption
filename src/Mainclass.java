@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.Key;  
 import java.security.NoSuchAlgorithmException;  
@@ -20,8 +21,8 @@ public class Mainclass {
 	public static final String CLASSNAME="carannotationinfolongenough";
 	public static final String APPLICATIONID="GQvxCLxantyoyl2Zo30XIpWyAtbVKa2uCbCSHNry";
 	public static final String CLIENTKEY="g2PktGEOsVOUxp6PS5McI9FLNQrbAspF1xsX2MEz";
-	public static final String USERNAME="AndroidUserForEncryptionUse";
-	public static final String USERPASSWORD="notdefinedmaybenotexist";
+	public static final String USERNAME="AndroidUserForEncryptionUseLongtTime";
+	public static final String USERPASSWORD="notdefinedmaybenotexistlongenough";
 	      
 	    /** 
 	     * 密钥算法 
@@ -231,7 +232,22 @@ public class Mainclass {
 	        output_s.write(encryptData);
 	      //  FileOutputStream output=new FileOutputStream(new File("key"));
 	    }
-	    
+	  public static   void testOnSaving(String keyfilename,String plaintextfilename) throws Exception{
+	     FileInputStream inKey=new FileInputStream(new File(keyfilename));
+	     FileInputStream inString=new FileInputStream(new File(plaintextfilename));
+	     byte[] key_classname=new byte[16];
+	     inKey.read(key_classname, 0, 16);
+	     byte[] plaintext_classname=new byte[32];
+	     inString.read(plaintext_classname, 0, 32);
+	     byte [] decryptData=decrypt(plaintext_classname, key_classname);
+	     System.out.println(new String(decryptData));
+	     
+	     
+	     
+	     
+	     inKey.close();
+	     inString.close();
+	    }
 	    public static void main(String[] args) throws Exception {  
 	    	// Write a new File
 	    	File keyFile=new File("key.dat");
@@ -245,9 +261,12 @@ public class Mainclass {
 	    	GenerateShowing("userpassword", USERPASSWORD, output_key, output_showString);
 	    	
 	    	
-	    	
+	    		    	
 	        output_key.close();
 	        output_showString.close();
+	        
+	        System.out.println("Reuslts showing below:");
+	        testOnSaving("key.dat", "showString.dat");
 	    }  
 	    
 	    
